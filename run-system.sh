@@ -12,3 +12,5 @@ SEEDER_CONTAINER=seeder
 GATEWAY_CONTAINER=gateway
 AGENT_CONTAINER=agent
 LABEL="com.example.devops2026" # Allows me to clean up later through the label
+
+docker network create --label "$LABEL" "$NETWORK"
