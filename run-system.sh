@@ -55,3 +55,6 @@ docker run --rm \
     --servers=cockroachdb \
     --tools=execute_query \
     --config=/mcp_config.yaml
+
+echo "Waiting for gateway to initialise..."
+sleep 5 # Lazy solution, but gets the job done
