@@ -17,3 +17,12 @@ docker network create --label "$LABEL" "$NETWORK"
 
 docker build --target seeder -t devops-seeder .
 docker build --target agent  -t devops-agent  .
+
+docker run -d \
+  --name "$DB_CONTAINER" \
+  --network "$NETWORK" \
+  --label "$LABEL" \
+  -e POSTGRES_USER="$DB_USER" \
+  -e POSTGRES_PASSWORD="$DB_PASS" \
+  -e POSTGRES_DB="$DB_NAME" \
+  postgres:latest
