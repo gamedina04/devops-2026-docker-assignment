@@ -31,3 +31,12 @@ echo "Waiting for Postgres to be ready..."
 until docker exec "$DB_CONTAINER" pg_isready -U "$DB_USER" -d "$DB_NAME"; do
   sleep 1
 done
+
+docker run --rm \
+  --name "$SEEDER_CONTAINER" \
+  --network "$NETWORK" \
+  --label "$LABEL" \
+  --mount type=bind,source="$(pwd)/Chinook.db",target=/app/Chinook.db,readonly \
+  -e SQLITE_FILE=/app/Chinook.db \
+  -e DATABASE_URL="postgres://${DB_USER}:${DB_PASS}@${DB_CONTAINER}:5432/${DB_NAME}" \
+  devops-seeder
