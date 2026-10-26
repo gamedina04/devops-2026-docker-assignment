@@ -40,3 +40,18 @@ docker run --rm \
   -e SQLITE_FILE=/app/Chinook.db \
   -e DATABASE_URL="postgres://${DB_USER}:${DB_PASS}@${DB_CONTAINER}:5432/${DB_NAME}" \
   devops-seeder
+
+  docker run -d \
+  --name "$GATEWAY_CONTAINER" \
+  --network "$NETWORK" \
+  --label "$LABEL" \
+  --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+  --mount type=bind,source="$(pwd)/mcp_config.yaml",target=/mcp_config.yaml,readonly \
+  --mount type=bind,source="$(pwd)/mcp_secret.env",target=/run/secrets/database-url,readonly \
+  docker/mcp-gateway:latest \
+    --transport=sse \
+    --secrets=/run/secrets/database-url \
+    --allow-unauthenticated \
+    --servers=cockroachdb \
+    --tools=execute_query \
+    --config=/mcp_config.yaml
