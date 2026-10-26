@@ -1,2 +1,4 @@
 #!/bin/sh
-# TODO
+set -eu
+
+LABEL="com.example.devops2026"
