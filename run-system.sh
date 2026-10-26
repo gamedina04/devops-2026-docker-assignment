@@ -14,3 +14,6 @@ AGENT_CONTAINER=agent
 LABEL="com.example.devops2026" # Allows me to clean up later through the label
 
 docker network create --label "$LABEL" "$NETWORK"
+
+docker build --target seeder -t devops-seeder .
+docker build --target agent  -t devops-agent  .
