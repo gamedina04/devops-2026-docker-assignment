@@ -8,3 +8,5 @@ docker ps -aq --filter "label=$LABEL" | xargs -r docker rm -f # Remove all conta
 docker volume ls -q --filter "label=$LABEL" | xargs -r docker volume rm -f # Remove volumes attached to the previous containers
 
 docker network ls -q --filter "label=$LABEL" | xargs -r docker network rm -f # Removes the user-defined network
+
+docker rmi -f devops-seeder devops-agent 2>/dev/null || true # Removes locally built images, ignores errors to prevent annoyances in terminal
