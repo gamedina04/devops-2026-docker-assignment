@@ -26,3 +26,8 @@ docker run -d \
   -e POSTGRES_PASSWORD="$DB_PASS" \
   -e POSTGRES_DB="$DB_NAME" \
   postgres:latest
+
+echo "Waiting for Postgres to be ready..."
+until docker exec "$DB_CONTAINER" pg_isready -U "$DB_USER" -d "$DB_NAME"; do
+  sleep 1
+done
